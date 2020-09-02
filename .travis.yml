@@ -1,0 +1,23 @@
+language: generic
+
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build  -t client-react-test -f ./client/Dockerfile.dev ./client/
+
+script:
+  - docker run -e CI=true client-react-test npm run test
+
+after_success:
+  - docker build -t jalil/multi-client ./client
+  - docker build -t jalil/multi-nginx ./nginx
+  - docker build -t jalil/multi-server ./server
+  - docker build -t jalil/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" |  docker login -u "$DOCKER_ID" ---password-stdin
+  - docker push jalil/multi-client
+  - docker push jalil/multi-nginx
+  - docker push jalil/multi-server
+  - docker push jalil/multi-worker
