@@ -17,6 +17,7 @@ after_success:
   - docker build -t jalil/multi-worker ./worker
 
   - echo "$DOCKER_PASSWORD" |  docker login -u "$DOCKER_USERNAME" ---password-stdin
+  - echo "DOCKER_USERNAME"
   - docker push jalil/multi-client
   - docker push jalil/multi-nginx
   - docker push jalil/multi-server
