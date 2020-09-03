@@ -21,3 +21,16 @@ after_success:
   - docker push jalil/multi-nginx
   - docker push jalil/multi-server
   - docker push jalil/multi-worker
+
+  deploy:
+    provider: elasticbeanstalk
+    region: "ap-northeast-1"
+    app: "multi-docker"
+    env: "MultiDocker-env"
+    bucket_name: "elasticbeanstalk-ap-northeast-1-386357636638"
+    #  bucket path is the name of app name:  Namaes usuall get created after you od a your first deploy
+    bucket_path: "multi-docker"
+    on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY

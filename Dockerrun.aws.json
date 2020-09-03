@@ -1,0 +1,37 @@
+{
+    "AWSEBSDockerrunVersion": 2,
+    "containerDefintions": [{
+            "name": "client",
+            "image": "jalil/multi-client",
+            "hostname": "client",
+            "essential": false
+        },
+        {
+            "name": "server",
+            "image": "jalil/multi-server",
+            "hostname": "api-server",
+            "essential": false
+        },
+        {
+            "name": "worker",
+            "image": "jalil/multi-worker",
+            "hostname": "worker",
+            "essential": false
+        },
+        {
+            "name": "nginx",
+            "image": "jalil/multi-nginx",
+            "hostname": "nginx",
+            "essential": true,
+            "portMappings": [{
+                "hostPort": 80,
+                "containerPort": 3000
+            }],
+            "links": [
+                "client",
+                "server"
+            ]
+
+        }
+    ]
+}
